@@ -1,10 +1,10 @@
 import './App.css';
-import TaskGrid from './components/taskgrid/TaskGrid';
+import TaskGridComponent from './components/taskgrid/TaskGridComponent';
 
 function App() {
   return (
     <div className="App">
-      <TaskGrid></TaskGrid>
+      <TaskGridComponent></TaskGridComponent>
     </div>
   );
 }
