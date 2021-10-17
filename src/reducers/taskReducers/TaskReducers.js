@@ -1,9 +1,10 @@
-import {FIND_ALL_TASKS, ADD_TASK, UPDATE_TASK, REMOVE_TASK} from '../../types';
+import {FIND_ALL_TASKS, ADD_TASK, UPDATE_TASK, REMOVE_TASK, TASK_ACTION_ERROR, SELECT_TASK} from '../../types';
 
 const initialState = {
     tasks: [],
     selectedTask: {},
-    loading:true
+    loading: true,
+    message: ''
 }
 
 const taskReducers = (state = initialState, action) => {
@@ -12,14 +13,40 @@ const taskReducers = (state = initialState, action) => {
           return {
               ...state,
               tasks:action.payload,
-              loading:false
+              loading:false,
+              message:''
             };
+        case SELECT_TASK:
+            return {
+                ...state,
+                selectedTask: action.payload
+              };
         case ADD_TASK:
-          return state - 1
+          return {
+            ...state,
+            tasks:[...state.tasks, action.payload],
+            loading:false,
+            message:''
+          };
         case UPDATE_TASK:
-          return 0
+          return {
+            ...state,
+            tasks:[...state.tasks.filter((item) => item.id !== action.payload.id), action.payload],
+            loading:false,
+            message:''
+          };
         case REMOVE_TASK:
-          return 0
+          return {
+            ...state,
+            loading:false,
+            message: action.payload
+          };
+        case TASK_ACTION_ERROR:
+          return {
+            ...state,
+            loading: false,
+            message: action.payload
+          };
         default:
           return state
       }

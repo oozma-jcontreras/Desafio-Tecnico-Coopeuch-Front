@@ -15,8 +15,8 @@ class TaskGridComponent extends Component {
             this.props.history.push('/change', task);
         }
         
-        const removeTask = (id) => {
-            console.log('REMOVE CLICK');
+        const removeTask = (task) => {
+            this.props.history.push('/remove', task);
         }
         const {tasks} = this.props.tasks;
         return (
@@ -38,13 +38,13 @@ class TaskGridComponent extends Component {
                             return (<tr key={task.id}>
                                 <td>{task.id}</td>
                                 <td>{task.description}</td>
-                                <td>{moment(task.creationDate).format('MMMM Do YYYY')}</td>
+                                <td>{moment(task.creationDate).format('DD-MM-YYYY HH:mm')}</td>
                                 <td>{task.active ? 'SI' : 'NO'}</td>
                                 <td>
                                     <input type='button' value='Actualizar' onClick={() => createOrUpdateTask(task)} />
                                 </td>
                                 <td>
-                                    <input type='button' value='Eliminar' onClick={() => removeTask(task.id)} />
+                                    <input type='button' value='Eliminar' onClick={() => removeTask(task)} />
                                 </td>
                             </tr>)
                         })}

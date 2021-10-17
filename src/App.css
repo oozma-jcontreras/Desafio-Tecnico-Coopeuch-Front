@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+input[type=number],input[type=text],input[type=date] {
+  width: 80%;
+  margin-bottom: 10px;
+}
+
+input[type=button] {
+  width: 80%;
+  margin-bottom: 10px;
+
+  background-color: #009879;
+  color: #ffffff;
+  text-align: center;
+  border: 2px solid #dddddd;
+}
