@@ -2,6 +2,7 @@ import {FIND_ALL_TASKS, ADD_TASK, UPDATE_TASK, REMOVE_TASK} from '../../types';
 
 const initialState = {
     tasks: [],
+    selectedTask: {},
     loading:true
 }
 

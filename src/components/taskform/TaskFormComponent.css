@@ -1,0 +1,11 @@
+.form {
+    width: 30%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
+
+.form input[type=number],input[type=text],input[type=date],input[type=button] {
+    width: 80%;
+    margin-bottom: 10px;
+}

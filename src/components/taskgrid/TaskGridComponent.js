@@ -4,24 +4,24 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import './TaskGridComponent.css';
 
-const createOrUpdateTask = (id) => {
-    console.log('UPDATE CLICK');
-}
-
-const removeTask = (id) => {
-    console.log('REMOVE CLICK');
-}
-
 class TaskGridComponent extends Component {
+    
     componentDidMount() {
         this.props.findAll();
     }
 
     render() {
+        const createOrUpdateTask = (task) => {
+            this.props.history.push('/change', task);
+        }
+        
+        const removeTask = (id) => {
+            console.log('REMOVE CLICK');
+        }
         const {tasks} = this.props.tasks;
         return (
             <>
-                <input type='button' value='Agregar Tarea' onClick={() => createOrUpdateTask(0)} />
+                <input type='button' value='Nueva Tarea' onClick={() => createOrUpdateTask({id:0})} />
                 <table>
                     <thead>
                         <tr>
@@ -41,7 +41,7 @@ class TaskGridComponent extends Component {
                                 <td>{moment(task.creationDate).format('MMMM Do YYYY')}</td>
                                 <td>{task.active ? 'SI' : 'NO'}</td>
                                 <td>
-                                    <input type='button' value='Actualizar' onClick={() => createOrUpdateTask(task.id)} />
+                                    <input type='button' value='Actualizar' onClick={() => createOrUpdateTask(task)} />
                                 </td>
                                 <td>
                                     <input type='button' value='Eliminar' onClick={() => removeTask(task.id)} />
@@ -50,7 +50,7 @@ class TaskGridComponent extends Component {
                         })}
                     </tbody>
                 </table>
-            </>
+        </>
         );
     }
 }
