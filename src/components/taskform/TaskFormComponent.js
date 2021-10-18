@@ -71,7 +71,7 @@ class TaskFormComponent extends Component {
                 }
                 <label>Descripción</label>
                 <input type="text" name="description" value={this.state.description} onChange={this.onChangeDescription} />
-                <label>Es Activo
+                <label>Es Vigente
                     <input type="checkbox" name="active" checked={this.state.active} onChange={this.onChangeActive} />
                 </label>
                 <input type='button' value='Guardar' onClick={this.saveTask} />
