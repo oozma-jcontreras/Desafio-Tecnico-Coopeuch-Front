@@ -1,59 +1,89 @@
 import React, { Component } from 'react';
 import './TaskFormComponent.css'
-import { addTask, updateTask } from '../../services/TaskService';
+import { serviceAddTask, serviceUpdateTask } from '../../services/TaskService';
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 class TaskFormComponent extends Component {
-    
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        this.onChangeDescription = this.onChangeDescription.bind(this);
+        this.onChangeActive = this.onChangeActive.bind(this);
+        this.saveTask = this.saveTask.bind(this);
+        this.goBack = this.goBack.bind(this);
+
+        const { id, description, active } = this.props.location.state;
         this.state = {
-            id, 
-            description, 
-            creationDate: moment(creationDate).format('YYYY-MM-DD'),
+            id,
+            description: description ? description : '',
             active
         };
     }
 
+    onChangeDescription(e) {
+        this.setState({
+            description: e.target.value,
+        });
+    }
+    onChangeActive(e) {
+        this.setState({
+            active: e.target.checked,
+        });
+    }
+
+    saveTask() {
+        const { id, description, active } = this.state;
+        const task = {
+            id,
+            description,
+            active
+        };
+
+        if (task.id > 0) {
+            this.props.serviceUpdateTask(task).then((data) => {
+                this.props.history.push('/');
+            })
+                .catch((e) => {
+                    console.log('ERROR', e);
+                });
+        }
+        else {
+            this.props.serviceAddTask(task).then((data) => {
+                console.log(data);
+            })
+                .catch((e) => {
+                    console.log(e);
+                });
+        }
+    }
+
+    goBack() {
+        this.props.history.push('/');
+    }
+
     render() {
-        const { id, description, creationDate, active } = this.props.location.state;
-        this.setState({ id, description, creationDate, active });
-        const handleSubmit = (event) => {
-            console.log(this.props.location.state);
-        }
-        const goBack = () => {
-            this.props.history.push('/');
-        }
-        const onInputchange = (event) => {
-            this.setState({
-              [event.target.name]: event.target.value
-            });
-          }
-        
         return (
             <div className='form'>
                 {this.state.id > 0 &&
-                <>
-                    <label>ID</label>
-                    <input type="number" name="id" value={this.state.id} readOnly />
+                    <>
+                        <label>ID</label>
+                        <input type="number" name="id" value={this.state.id} readOnly />
                     </>
                 }
                 <label>Descripción</label>
-                <input type="text" name="description" value={this.state.description} />
-                <label>Fecha</label>
-                <input type="date" name="creationDate" value={this.state.creationDate} />
-                <label>Es Activo <input type="checkbox" name="active" value={this.state.active} /></label>
-                <input type='button' value='Guardar' onClick={handleSubmit} />
-                <input type='button' value='Volver' onClick={goBack} />
+                <input type="text" name="description" value={this.state.description} onChange={this.onChangeDescription} />
+                <label>Es Activo
+                    <input type="checkbox" name="active" checked={this.state.active} onChange={this.onChangeActive} />
+                </label>
+                <input type='button' value='Guardar' onClick={this.saveTask} />
+                <input type='button' value='Volver' onClick={this.goBack} />
             </div>
         );
     }
 }
 
-const mapStateToProps = (state) => ({ selectedTask: state.selectedTask });
+const mapStateToProps = (state) => ({ tasks: state.tasks });
 const mapDispatchToProps = {
-    addTask, 
-    updateTask
+    serviceAddTask,
+    serviceUpdateTask
 };
 export default connect(mapStateToProps, mapDispatchToProps)(TaskFormComponent);

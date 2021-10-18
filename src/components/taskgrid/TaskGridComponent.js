@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { findAll } from '../../services/TaskService';
+import { findAll } from '../../actions/TaskAction';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import './TaskGridComponent.css';
@@ -38,7 +38,7 @@ class TaskGridComponent extends Component {
                             return (<tr key={task.id}>
                                 <td>{task.id}</td>
                                 <td>{task.description}</td>
-                                <td>{moment(task.creationDate).format('DD-MM-YYYY HH:mm')}</td>
+                                <td>{moment(task.creationDate).format('DD-MM-YYYY')}</td>
                                 <td>{task.active ? 'SI' : 'NO'}</td>
                                 <td>
                                     <input type='button' value='Actualizar' onClick={() => createOrUpdateTask(task)} />
