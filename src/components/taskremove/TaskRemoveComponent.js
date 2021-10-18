@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import { serviceRemoveTask } from '../../services/TaskService';
+import { serviceRemoveTask } from '../../services/taskService';
 import { connect } from 'react-redux';
 
 class TaskRemoveComponent extends Component {
@@ -9,24 +8,15 @@ class TaskRemoveComponent extends Component {
         this.removeTask = this.removeTask.bind(this);
         this.goBack = this.goBack.bind(this);
 
-        const { id, description, creationDate, active } = this.props.location.state;
+        const { id } = this.props.location.state;
         this.state = {
-            id,
-            description: description ? description : '',
-            creationDate: moment(creationDate).format('YYYY-MM-DD'),
-            active
+            id
         };
     }
 
     removeTask() {
-        const { id, description, creationDate, active } = this.state;
-        const task = {
-            id,
-            description,
-            creationDate: moment(creationDate).format('YYYY-MM-DD'),
-            active
-        };
-        this.props.removeTask(task).then((data) => {
+        const { id } = this.state;
+        this.props.serviceRemoveTask(id).then((data) => {
             this.props.history.push('/');
         })
             .catch((e) => {
@@ -42,7 +32,7 @@ class TaskRemoveComponent extends Component {
         return (
             <div className='form'>
                 <p>¿Esta seguro que desea eliminar la tarea {this.state.id} ?</p>
-                <input type='button' value='Guardar' onClick={this.removeTask} />
+                <input type='button' value='Eliminar' onClick={this.removeTask} />
                 <input type='button' value='Volver' onClick={this.goBack} />
             </div>
         );
@@ -50,4 +40,7 @@ class TaskRemoveComponent extends Component {
 }
 
 const mapStateToProps = (state) => ({ tasks: state.tasks });
-export default connect(mapStateToProps, serviceRemoveTask)(TaskRemoveComponent);
+const mapDispatchToProps = {
+    serviceRemoveTask
+};
+export default connect(mapStateToProps, mapDispatchToProps)(TaskRemoveComponent);

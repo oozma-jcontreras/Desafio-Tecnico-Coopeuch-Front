@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './TaskFormComponent.css'
-import { serviceAddTask, serviceUpdateTask } from '../../services/TaskService';
+import { serviceAddTask, serviceUpdateTask } from '../../services/taskService';
 import { connect } from 'react-redux';
 
 class TaskFormComponent extends Component {
@@ -48,7 +48,7 @@ class TaskFormComponent extends Component {
         }
         else {
             this.props.serviceAddTask(task).then((data) => {
-                console.log(data);
+                this.props.history.push('/');
             })
                 .catch((e) => {
                     console.log(e);

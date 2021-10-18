@@ -1,5 +1,5 @@
 import { FIND_ALL_TASKS, ADD_TASK, UPDATE_TASK, REMOVE_TASK } from '../types';
-import { serviceFindAll, serviceAddTask, serviceUpdateTask, serviceRemoveTask } from "../services/TaskService";
+import { serviceFindAll, serviceAddTask, serviceUpdateTask, serviceRemoveTask } from "../services/taskService";
 
 const findAll = () => async dispatch => {
     try {
@@ -44,9 +44,9 @@ const updateTask = (task) => async dispatch => {
     }
 };
 
-const removeTask = (task) => async dispatch => {
+const removeTask = (id) => async dispatch => {
     try {
-        const response = await serviceRemoveTask(task);
+        const response = await serviceRemoveTask(id);
         dispatch({
             type: REMOVE_TASK,
             payload: response.data,

@@ -19,8 +19,8 @@ const serviceUpdateTask = (task) => async dispatch => {
   return baseAxios.post('/', task);
 }
 
-const serviceRemoveTask = (task) => async dispatch => {
-  baseAxios.delete('/', task)
+const serviceRemoveTask = (id) => async dispatch => {
+  return baseAxios.delete('/' + id)
 }
 
 export { serviceFindAll, serviceAddTask, serviceUpdateTask, serviceRemoveTask }
